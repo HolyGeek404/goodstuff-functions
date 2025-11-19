@@ -7,10 +7,10 @@ namespace GoodStuff.Functions.Services;
 public class HttpRequestMessageProvider(
     ITokenProviderService tokenProvider) : IHttpRequestMessageProvider
 {
-    public async Task<HttpRequestMessage> GetHttpRequestMessage(HttpRequestData request, ApiRoute apiRoute, string endpoint)
+    public async Task<HttpRequestMessage> GetHttpRequestMessage(HttpRequestData request, ApiRoute apiRoute)
     {
         var method = GetHttpMethod(request);
-        var message = new HttpRequestMessage(method, endpoint);
+        var message = new HttpRequestMessage(method, apiRoute.BaseUrl);
         await SetAuthenticationHeader(message, apiRoute);
          
         return message;

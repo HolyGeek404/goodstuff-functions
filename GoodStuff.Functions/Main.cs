@@ -1,31 +1,24 @@
 using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
-using Azure.Core;
-using Azure.Identity;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
 using GoodStuff.Functions.Services;
 
 namespace GoodStuff.Functions;
 
-public class Main(ILogger logger, IConfiguration config)
+public class Main(ILogger<Main> logger, IFunctionService functionService)
 {
     
     [Function("ApiGateway")]
     public async Task<HttpResponseData> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "GET", "POST", "PATCH", "DELETE", Route = "proxy/{api}/{endpoint}")]
         HttpRequestData req,
-        string api,
-        string endpoint)
+        string api)
     {
-        logger.LogInformation("Function triggered. API: {Api}, Category: {Category}, Method: {Method}", api, endpoint, req.Method);
+        logger.LogInformation("Function triggered. API: {Api}, Method: {Method}", api, req.Method);
 
        
-        
+        await functionService.HandleRequest(req, api);
         
         
         return req.CreateResponse(HttpStatusCode.OK);

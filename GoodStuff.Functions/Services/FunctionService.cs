@@ -10,9 +10,9 @@ public class FunctionService(
      IOptions<Dictionary<string, ApiRoute>> routes,
      IHttpClientFactory httpClientFactory,
      ILogger<FunctionService> logger,
-     IHttpRequestMessageProvider httpRequestMessageProvider)
+     IHttpRequestMessageProvider httpRequestMessageProvider) : IFunctionService
 {
-     public async Task<HttpResponseMessage> HandleRequest(HttpRequestData request, string api, string endpoint)
+     public async Task<HttpResponseMessage> HandleRequest(HttpRequestData request, string api)
      {
           var apiRoute = routes.Value.FirstOrDefault(x => x.Key == api).Value;
           if (apiRoute == null)
@@ -23,7 +23,7 @@ public class FunctionService(
           try
           {
                var httpClient = httpClientFactory.CreateClient( apiRoute.BaseUrl);
-               var message = await httpRequestMessageProvider.GetHttpRequestMessage(request, apiRoute, endpoint);
+               var message = await httpRequestMessageProvider.GetHttpRequestMessage(request, apiRoute);
                var response = await httpClient.SendAsync(message);
                return response;
           }

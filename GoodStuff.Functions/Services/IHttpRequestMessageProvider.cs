@@ -5,5 +5,5 @@ namespace GoodStuff.Functions.Services;
 
 public interface IHttpRequestMessageProvider
 {
-    Task<HttpRequestMessage> GetHttpRequestMessage(HttpRequestData request, ApiRoute apiRoute, string endpoint);
+    Task<HttpRequestMessage> GetHttpRequestMessage(HttpRequestData request, ApiRoute apiRoute);
 }
