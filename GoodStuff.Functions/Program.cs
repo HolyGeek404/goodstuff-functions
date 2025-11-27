@@ -15,6 +15,7 @@ builder.ConfigureFunctionsWebApplication().Configuration
 
 var azureAd = builder.Configuration.GetSection("AzureAd");
 builder.Configuration.AddAzureKeyVault(new Uri(azureAd["KvUrl"]), new DefaultAzureCredential());
+
 builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSerilog(new LoggerConfiguration().WriteTo.Console().CreateLogger()));
 
