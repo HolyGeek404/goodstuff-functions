@@ -13,7 +13,7 @@ builder.ConfigureFunctionsWebApplication().Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
 
 var azureAd = builder.Configuration.GetSection("AzureAd");
-builder.Configuration.AddAzureKeyVault(new Uri(azureAd["KvUrl"]), new DefaultAzureCredential());
+builder.Configuration.AddAzureKeyVault(new Uri("https://kv-gs-functions.vault.azure.net/"), new DefaultAzureCredential());
 
 builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSerilog(new LoggerConfiguration().WriteTo.Console().CreateLogger()));
