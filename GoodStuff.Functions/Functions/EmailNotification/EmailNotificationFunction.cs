@@ -8,8 +8,7 @@ public class EmailNotificationFunction(IEmailNotificationService service)
 {
     [Function("EmailNotification")]
 
-    public async Task<bool> Run([HttpTrigger(AuthorizationLevel.Anonymous,
-            "POST", Route = "notification/{type}")] HttpRequestData req, string type)
+    public async Task<bool> Run([HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "notification/{type}")] HttpRequestData req, string type)
     {
         await service.ProcessRequest(req, type);
         return true;
