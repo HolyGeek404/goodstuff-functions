@@ -1,16 +1,15 @@
 using System.Net;
 using System.Net.Mail;
 using GoodStuff.Functions.Interfaces;
-using Microsoft.Extensions.Configuration;
 
 namespace GoodStuff.Functions.Functions.EmailNotification.Services;
 
-public class EmailService(IConfiguration config) : IEmailService
+public class EmailService() : IEmailService
 {
     public async Task SendVerificationEmail(string userEmail, Guid key)
     {
-        var fromAddress = config["AzureAd:Email"];
-        var fromPassword = config["AzureAd:EmailKey"];
+        var fromAddress = Environment.GetEnvironmentVariable("Email");
+        var fromPassword = Environment.GetEnvironmentVariable("EmailKey");
 
         var smtpClient = new SmtpClient
         {

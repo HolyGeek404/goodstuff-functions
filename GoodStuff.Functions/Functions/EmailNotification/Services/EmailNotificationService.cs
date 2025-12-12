@@ -5,8 +5,7 @@ using Microsoft.Azure.Functions.Worker.Http;
 
 namespace GoodStuff.Functions.Functions.EmailNotification.Services;
 
-public class EmailNotificationService(
-    IEmailService emailService) : IEmailNotificationService
+public class EmailNotificationService(IEmailService emailService) : IEmailNotificationService
 {
     public async Task ProcessRequest(HttpRequestData req, string type)
     {

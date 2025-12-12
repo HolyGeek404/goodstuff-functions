@@ -9,14 +9,9 @@ using Serilog;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
-builder.ConfigureFunctionsWebApplication().Configuration
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
+builder.Configuration.AddAzureKeyVault(new Uri(Environment.GetEnvironmentVariable("KvUrl")), new DefaultAzureCredential());
 
-var azureAd = builder.Configuration.GetSection("AzureAd");
-builder.Configuration.AddAzureKeyVault(new Uri("https://kv-gs-functions.vault.azure.net/"), new DefaultAzureCredential());
-
-builder.Services.AddLogging(loggingBuilder =>
-    loggingBuilder.AddSerilog(new LoggerConfiguration().WriteTo.Console().CreateLogger()));
+builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(new LoggerConfiguration().WriteTo.Console().CreateLogger()));
 
 builder.Services.AddHttpClient();
 builder.Services.AddServices();
